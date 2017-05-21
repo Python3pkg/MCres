@@ -88,13 +88,13 @@ class MCres(object):
         Apply a filter on a parameter
         """
         if param not in self.paramstr:
-            print(_core.font.red+"ERROR: Parameter '%s' not found." % (param)+_core.font.normal)
+            print((_core.font.red+"ERROR: Parameter '%s' not found." % (param)+_core.font.normal))
             return
         vals = self.chain[param]
         if v_max is None: v_max = vals.max()
         if v_min is None: v_min = vals.min()
         self._addfilter(param=param, v_min=v_min, v_max=v_max)        
-        print(_core.font.blue+"Applied filter on '%s'.\nMin: %f, Max: %f. %i data points left." % (param, v_min, v_max, (self.chain.mask[self.paramstr[0]]==False).sum())+_core.font.normal)
+        print((_core.font.blue+"Applied filter on '%s'.\nMin: %f, Max: %f. %i data points left." % (param, v_min, v_max, (self.chain.mask[self.paramstr[0]]==False).sum())+_core.font.normal))
         
 
     def _addfilter(self, param, v_min, v_max):
@@ -104,7 +104,7 @@ class MCres(object):
         self.lnprob.mask = newmask
         self._filters.append((param, v_min, v_max))
         if (self.chain.mask[param]==False).sum()==0:
-            print(_core.font.red+"ERROR: Your filter removed all data."+_core.font.normal)
+            print((_core.font.red+"ERROR: Your filter removed all data."+_core.font.normal))
 
 
     def remfilter(self, ind):
@@ -130,12 +130,12 @@ class MCres(object):
 
     def wrap(self, param, center=np.pi, cycle=2*np.pi):
         if param not in self.paramstr:
-            print(_core.font.red+"ERROR: Parameter '%s' not found." % (param)+_core.font.normal)
+            print((_core.font.red+"ERROR: Parameter '%s' not found." % (param)+_core.font.normal))
             return
         cycle = float(cycle)
         at = float(center)%cycle-cycle/2.
         self.chain[param] = (self.chain[param]-at)%(cycle)+at
-        print(_core.font.blue+"Wrapping applied. Window for '%s' is between %f and %f." % (param, at, at+cycle)+_core.font.normal)
+        print((_core.font.blue+"Wrapping applied. Window for '%s' is between %f and %f." % (param, at, at+cycle)+_core.font.normal))
 
 
     @property
@@ -184,7 +184,7 @@ class MCres(object):
             if not hasattr(params, '__iter__'): params = [params]
             for item in params:
                 if item not in self.paramstr:
-                    print("Error with %s, you must choose each element of params among %s" % (item, self.paramstr))
+                    print(("Error with %s, you must choose each element of params among %s" % (item, self.paramstr)))
                 else:
                     paramiter.append((self.paramstr.index(item), item))
         res = []
@@ -225,7 +225,7 @@ class MCres(object):
         Return a 2D histogram of the MC chain, showing the walker density per bin
         """
         if param_x not in self.paramstr or param_y not in self.paramstr:
-            print("You must choose param_x and param_y among %s" % self.paramstr)
+            print(("You must choose param_x and param_y among %s" % self.paramstr))
             return
         x = self.chain[param_x]
         if hasattr(x, 'compressed'): x = x.compressed()
